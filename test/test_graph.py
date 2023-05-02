@@ -1,10 +1,9 @@
-import ggdGVC
 from ggdGVC import graph
 import pytest
 
 class Test_Graph():
     def test_basic(self):
-        G = ggdGVC.graph()
+        G = graph()
 
         G.add_vertex(1)
         color = G.get_vertex_color(1)
@@ -19,7 +18,7 @@ class Test_Graph():
         assert color == -1
 
     def test_load_color(self):
-        G = ggdGVC.graph()
+        G = graph()
 
         color = G.load_color()
         assert len(color) == 0
@@ -47,7 +46,7 @@ class Test_Graph():
         assert color[4] == 22
 
 if __name__ == '__main__':
-    G = ggdGVC.graph(graph.BACKTRACKING)
+    G = graph(graph.BACKTRACKING)
 
     color = G.load_color()
     print(len(color))
