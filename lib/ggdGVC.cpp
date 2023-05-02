@@ -11,6 +11,7 @@ PYBIND11_MODULE(ggdGVC, m)
 {
     m.doc() = "ggdGVC: A Simple Vertex Coloring Library";
     py::class_<graph>(m, "graph")
+        .def(py::init<>())
         .def("add_vertex", &graph::add_vertex)
         .def("add_edge", &graph::add_edge)
         .def("set_vertex_color", &graph::set_vertex_color)
