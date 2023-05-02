@@ -1,4 +1,5 @@
 import ggdGVC
+from ggdGVC import graph
 import pytest
 
 class Test_Graph():
@@ -46,7 +47,7 @@ class Test_Graph():
         assert color[4] == 22
 
 if __name__ == '__main__':
-    G = ggdGVC.graph()
+    G = ggdGVC.graph(graph.BACKTRACKING)
 
     color = G.load_color()
     print(len(color))

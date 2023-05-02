@@ -6,6 +6,12 @@
 class graph
 {
 public:
+    enum Method { GREEDY, BACKTRACKING };
+
+    graph() : m_method(GREEDY) {}
+
+    graph(Method method) : m_method(method) {}
+
     void add_vertex(int id)
     {
         if (m_adjList.find(id) == m_adjList.end()) {
@@ -50,6 +56,8 @@ public:
         return m_color[id];
     }
 
+    void set_method(Method method) { m_method = method; }
+
     std::unordered_map<int, int> load_color() { return m_color; }
 
     void color_graph();
@@ -60,4 +68,5 @@ private:
     int m_numE;
     std::unordered_map<int, std::list<int>> m_adjList;
     std::unordered_map<int, int> m_color;
+    Method m_method;
 };
