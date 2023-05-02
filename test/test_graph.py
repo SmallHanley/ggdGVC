@@ -21,7 +21,7 @@ class Test_Graph():
         G = ggdGVC.graph()
 
         color = G.load_color()
-        print(color)
+        assert len(color) == 0
 
         G.add_vertex(1)
         color = G.get_vertex_color(1)
@@ -36,13 +36,20 @@ class Test_Graph():
         assert color == -1
 
         color = G.load_color()
-        print(color)
+        assert len(color) == 1
+
+        G.set_vertex_color(4, 22)
+        G.add_edge(5, 6)
+
+        color = G.load_color()
+        assert len(color) == 4
+        assert color[4] == 22
 
 if __name__ == '__main__':
     G = ggdGVC.graph()
 
     color = G.load_color()
-    print(color)
+    print(len(color))
 
     G.add_vertex(1)
     G.add_vertex(3)

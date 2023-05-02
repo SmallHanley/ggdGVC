@@ -10,6 +10,7 @@ public:
     {
         if (m_adjList.find(id) == m_adjList.end()) {
             m_adjList[id] = std::list<int>();
+            m_color[id] = -1;
             m_numV++;
         }
     }
@@ -18,10 +19,12 @@ public:
     {
         if (m_adjList.find(id1) == m_adjList.end()) {
             m_adjList[id1] = std::list<int>();
+            m_color[id1] = -1;
             m_numV++;
         }
         if (m_adjList.find(id2) == m_adjList.end()) {
             m_adjList[id2] = std::list<int>();
+            m_color[id2] = -1;
             m_numV++;
         }
         m_adjList[id1].push_back(id2);
@@ -33,6 +36,7 @@ public:
     {
         if (m_adjList.find(id) == m_adjList.end()) {
             m_adjList[id] = std::list<int>();
+            m_color[id] = color;
             m_numV++;
         }
         m_color[id] = color;
@@ -40,8 +44,7 @@ public:
 
     int get_vertex_color(int id)
     {
-        if (m_adjList.find(id) == m_adjList.end() ||
-            m_color.find(id) == m_color.end()) {
+        if (m_color.find(id) == m_color.end()) {
             return -1;
         }
         return m_color[id];
