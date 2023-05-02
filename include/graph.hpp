@@ -47,6 +47,8 @@ public:
         return m_color[id];
     }
 
+    std::unordered_map<int, int> load_color() { return m_color; }
+
     void color_graph();
     void read_graph(char *file);
 

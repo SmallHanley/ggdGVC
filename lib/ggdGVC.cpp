@@ -1,4 +1,5 @@
 #include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
 #include "graph.hpp"
 
 namespace py = pybind11;
@@ -15,5 +16,6 @@ PYBIND11_MODULE(ggdGVC, m)
         .def("add_vertex", &graph::add_vertex)
         .def("add_edge", &graph::add_edge)
         .def("set_vertex_color", &graph::set_vertex_color)
-        .def("get_vertex_color", &graph::get_vertex_color);
+        .def("get_vertex_color", &graph::get_vertex_color)
+        .def("load_color", &graph::load_color);
 }
