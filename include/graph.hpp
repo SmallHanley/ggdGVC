@@ -60,7 +60,16 @@ public:
 
     std::unordered_map<int, int> load_color() { return m_color; }
 
-    void color_graph();
+    void color_graph()
+    {
+        switch (m_method) {
+        case GREEDY:
+            greedy_coloring();
+            break;
+        default:
+            exit(1);
+        }
+    }
     void read_graph(char *file);
 
 private:
@@ -69,4 +78,6 @@ private:
     std::unordered_map<int, std::list<int>> m_adjList;
     std::unordered_map<int, int> m_color;
     Method m_method;
+
+    void greedy_coloring();
 };

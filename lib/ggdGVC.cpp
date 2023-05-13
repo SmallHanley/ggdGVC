@@ -4,9 +4,31 @@
 
 namespace py = pybind11;
 
-void graph::color_graph() {}
-
 void graph::read_graph(char *file) {}
+
+void graph::greedy_coloring()
+{
+    std::vector<bool> available(m_numV, false);
+    for (auto u = m_adjList.begin(); u != m_adjList.end(); u++) {
+        for (auto i = u->second.begin(); i != u->second.end(); i++) {
+            if (m_color[*i] != -1) {
+                available[m_color[*i]] = true;
+            }
+        }
+        int cr;
+        for (cr = 0; cr < m_numV; cr++) {
+            if (available[cr] == false) {
+                break;
+            }
+        }
+        m_color[u->first] = cr;
+        for (auto i = u->second.begin(); i != u->second.end(); i++) {
+            if (m_color[*i] != -1) {
+                available[m_color[*i]] = false;
+            }
+        }
+    }
+}
 
 PYBIND11_MODULE(ggdGVC, m)
 {
@@ -20,7 +42,8 @@ PYBIND11_MODULE(ggdGVC, m)
         .def("add_edge", &graph::add_edge)
         .def("set_vertex_color", &graph::set_vertex_color)
         .def("get_vertex_color", &graph::get_vertex_color)
-        .def("load_color", &graph::load_color);
+        .def("load_color", &graph::load_color)
+        .def("color_graph", &graph::color_graph);
 
     py::enum_<graph::Method>(clsGraph, "Method")
         .value("GREEDY", graph::Method::GREEDY)
