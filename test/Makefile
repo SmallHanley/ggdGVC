@@ -6,6 +6,9 @@ all:
 test: all
 	PYTHONPATH=../lib/ python3 -m pytest -v
 
+visual:
+	PYTHONPATH=../lib/ python3 visual_sample.py
+
 clean:
 	rm -rf  __pycache__ .pytest_cache
 	$(MAKE) -C ../lib/ clean
