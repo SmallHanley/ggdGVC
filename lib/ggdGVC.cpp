@@ -42,6 +42,8 @@ PYBIND11_MODULE(ggdGVC, m)
         .def("add_edge", &graph::add_edge)
         .def("set_vertex_color", &graph::set_vertex_color)
         .def("get_vertex_color", &graph::get_vertex_color)
+        .def("load_vertex", &graph::load_vertex)
+        .def("load_edge", &graph::load_edge)
         .def("load_color", &graph::load_color)
         .def("color_graph", &graph::color_graph);
 
