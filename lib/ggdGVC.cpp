@@ -4,8 +4,6 @@
 
 namespace py = pybind11;
 
-void graph::read_graph(char *file) {}
-
 void graph::greedy_coloring()
 {
     std::vector<bool> available(m_numV, false);
@@ -46,7 +44,9 @@ PYBIND11_MODULE(ggdGVC, m)
         .def("load_vertex", &graph::load_vertex)
         .def("load_edge", &graph::load_edge)
         .def("load_color", &graph::load_color)
-        .def("color_graph", &graph::color_graph);
+        .def("color_graph", &graph::color_graph)
+        .def("write_graph", &graph::write_graph)
+        .def("read_graph", &graph::read_graph);
 
     py::enum_<graph::Method>(clsGraph, "Method")
         .value("GREEDY", graph::Method::GREEDY)

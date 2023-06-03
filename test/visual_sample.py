@@ -22,6 +22,7 @@ G.color_graph()
 vertex = G.load_vertex()
 edge = G.load_edge()
 color = G.load_color()
+G.write_graph('tmp.json')
 
 # Visualization
 G = nx.Graph()

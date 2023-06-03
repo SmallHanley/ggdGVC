@@ -1,16 +1,22 @@
 #pragma once
 
+#include <iostream>
+#include <fstream>
+#include <string>
 #include <list>
 #include <unordered_map>
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
 
 class graph
 {
 public:
     enum Method { GREEDY, BACKTRACKING };
 
-    graph() : m_method(GREEDY) {}
+    graph() : m_numV(0), m_numE(0), m_method(GREEDY) {}
 
-    graph(Method method) : m_method(method) {}
+    graph(Method method) : m_numV(0), m_numE(0), m_method(method) {}
 
     void add_vertex(int id)
     {
@@ -77,7 +83,27 @@ public:
             exit(1);
         }
     }
-    void read_graph(char *file);
+
+    void write_graph(const std::string& filename) const
+    {
+        std::ofstream file(filename);
+        if (file.is_open()) {
+            json j = to_json();
+            file << j.dump(4); // 寫入 JSON 字串到檔案（縮排為 4 個空格）
+            file.close();
+        }
+    }
+
+    void read_graph(const std::string& filename)
+    {
+        std::ifstream file(filename);
+        if (file.is_open()) {
+            json j;
+            file >> j;
+            from_json(j);
+            file.close();
+        }
+    }
 
 private:
     int m_numV;
@@ -89,4 +115,26 @@ private:
     Method m_method;
 
     void greedy_coloring();
+
+    json to_json() const
+    {
+        json j;
+
+        j["numV"] = m_numV;
+        j["numE"] = m_numE;
+        j["vertex"] = m_vertex;
+        j["edge"] = m_edge;
+        j["color"] = m_color;
+
+        return j;
+    }
+
+    void from_json(const json& j)
+    {
+        m_numV = j["numV"];
+        m_numE = j["numE"];
+        m_vertex = j["vertex"].get<std::vector<int>>();
+        m_edge = j["edge"].get<std::vector<std::pair<int, int>>>();
+        m_color = j["color"].get<std::unordered_map<int, int>>();
+    }
 };
