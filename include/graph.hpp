@@ -136,5 +136,13 @@ private:
         m_vertex = j["vertex"].get<std::vector<int>>();
         m_edge = j["edge"].get<std::vector<std::pair<int, int>>>();
         m_color = j["color"].get<std::unordered_map<int, int>>();
+        m_adjList.clear();
+        for (auto v : m_vertex) {
+            m_adjList[v] = std::list<int>();
+        }
+        for (auto e : m_edge) {
+            m_adjList[e.first].push_back(e.second);
+            m_adjList[e.second].push_back(e.first);
+        }
     }
 };
