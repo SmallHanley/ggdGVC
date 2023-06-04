@@ -138,13 +138,16 @@ If you would like to refer to more examples, please refer to the `graph/` direct
 ## Visualization Result
 
 * Complete graph
-[](image/complete_graph.png)
+
+![](image/complete_graph.png)
 
 * Bipartite graph
-[](image/bipartite_graph.png)
+
+![](image/bipartite_graph.png)
 
 * Petersen graph
-[](image/petersen_graph.png)
+
+![](image/petersen_graph.png)
 
 ## Timing Result
 
