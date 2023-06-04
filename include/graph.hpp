@@ -1,12 +1,12 @@
 #pragma once
 
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <list>
-#include <unordered_map>
-#include <nlohmann/json.hpp>
 #include <climits>
+#include <fstream>
+#include <iostream>
+#include <list>
+#include <nlohmann/json.hpp>
+#include <string>
+#include <unordered_map>
 
 using json = nlohmann::json;
 
@@ -43,10 +43,15 @@ public:
             m_vertex.push_back(id2);
             m_numV++;
         }
-        m_adjList[id1].push_back(id2);
-        m_adjList[id2].push_back(id1);
-        m_edge.push_back(std::make_pair(id1, id2));
-        m_numE++;
+        if (std::find(m_edge.begin(), m_edge.end(), std::make_pair(id1, id2)) ==
+                m_edge.end() ||
+            std::find(m_edge.begin(), m_edge.end(), std::make_pair(id2, id1)) ==
+                m_edge.end()) {
+            m_adjList[id1].push_back(id2);
+            m_adjList[id2].push_back(id1);
+            m_edge.push_back(std::make_pair(id1, id2));
+            m_numE++;
+        }
     }
 
     void set_vertex_color(int id, int color)
@@ -93,22 +98,22 @@ public:
 
     void clear_color()
     {
-        for (auto & it : m_color) {
+        for (auto &it : m_color) {
             it.second = -1;
         }
     }
 
-    void write_graph(const std::string& filename) const
+    void write_graph(const std::string &filename) const
     {
         std::ofstream file(filename);
         if (file.is_open()) {
             json j = to_json();
-            file << j.dump(4); // 寫入 JSON 字串到檔案（縮排為 4 個空格）
+            file << j.dump(4);  // 寫入 JSON 字串到檔案（縮排為 4 個空格）
             file.close();
         }
     }
 
-    void read_graph(const std::string& filename)
+    void read_graph(const std::string &filename)
     {
         std::ifstream file(filename);
         if (file.is_open()) {
@@ -166,11 +171,13 @@ private:
     {
         int minC = INT_MAX;
         if (idx == m_numV) {
-            auto numC = std::max_element(color.begin(), color.end(),
-                                        [](const std::pair<int, int> &a,
-                                            const std::pair<int, int> &b) -> bool {
-                                            return a.second < b.second;
-                                        })->second;
+            auto numC =
+                std::max_element(color.begin(), color.end(),
+                                 [](const std::pair<int, int> &a,
+                                    const std::pair<int, int> &b) -> bool {
+                                     return a.second < b.second;
+                                 })
+                    ->second;
             if (numC < minC) {
                 m_color = color;
                 minC = numC;
@@ -209,7 +216,7 @@ private:
 
         int numC = 0;
 
-        while (!vertex.empty()) { 
+        while (!vertex.empty()) {
             for (auto it = vertex.begin(); it != vertex.end(); it++) {
                 if (isValidColor(*it, numC, m_color)) {
                     m_color[*it] = numC;
@@ -233,7 +240,7 @@ private:
         return j;
     }
 
-    void from_json(const json& j)
+    void from_json(const json &j)
     {
         m_numV = j["numV"];
         m_numE = j["numE"];
