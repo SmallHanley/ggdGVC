@@ -13,7 +13,7 @@ using json = nlohmann::json;
 class graph
 {
 public:
-    enum Method { GREEDY, BACKTRACKING };
+    enum Method { GREEDY, BACKTRACKING, WELSH_POWELL };
 
     graph() : m_numV(0), m_numE(0), m_method(GREEDY) {}
 
@@ -83,8 +83,18 @@ public:
         case BACKTRACKING:
             backtracking_coloring();
             break;
+        case WELSH_POWELL:
+            welsh_powell_coloring();
+            break;
         default:
             exit(1);
+        }
+    }
+
+    void clear_color()
+    {
+        for (auto & it : m_color) {
+            it.second = -1;
         }
     }
 
@@ -187,6 +197,27 @@ private:
 
         std::unordered_map<int, int> color(m_color);
         backtrack(0, color);
+    }
+
+    void welsh_powell_coloring()
+    {
+        std::list<int> vertex(m_vertex.begin(), m_vertex.end());
+
+        vertex.sort([&](int id1, int id2) {
+            return m_adjList[id1].size() > m_adjList[id2].size();
+        });
+
+        int numC = 0;
+
+        while (!vertex.empty()) { 
+            for (auto it = vertex.begin(); it != vertex.end(); it++) {
+                if (isValidColor(*it, numC, m_color)) {
+                    m_color[*it] = numC;
+                    it = vertex.erase(it);
+                }
+            }
+            numC++;
+        }
     }
 
     json to_json() const

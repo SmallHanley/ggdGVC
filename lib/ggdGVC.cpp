@@ -21,11 +21,13 @@ PYBIND11_MODULE(ggdGVC, m)
         .def("load_edge", &graph::load_edge)
         .def("load_color", &graph::load_color)
         .def("color_graph", &graph::color_graph)
+        .def("clear_color", &graph::clear_color)
         .def("write_graph", &graph::write_graph)
         .def("read_graph", &graph::read_graph);
 
     py::enum_<graph::Method>(clsGraph, "Method")
         .value("GREEDY", graph::Method::GREEDY)
         .value("BACKTRACKING", graph::Method::BACKTRACKING)
+        .value("WELSH_POWELL", graph::Method::WELSH_POWELL)
         .export_values();
 }
