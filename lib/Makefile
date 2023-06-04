@@ -7,4 +7,4 @@ all: ../include/graph.hpp ggdGVC.cpp
 	${CXX} $(CXXFLAGS) -I../include $(PYBIND) ggdGVC.cpp -o ggdGVC$(PYCONFIG)
 
 clean:
-	$(RM) -rf *.so
+	$(RM) -rf *.so *.o

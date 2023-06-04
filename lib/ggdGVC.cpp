@@ -4,30 +4,6 @@
 
 namespace py = pybind11;
 
-void graph::greedy_coloring()
-{
-    std::vector<bool> available(m_numV, false);
-    for (auto u = m_adjList.begin(); u != m_adjList.end(); u++) {
-        for (auto i = u->second.begin(); i != u->second.end(); i++) {
-            if (m_color[*i] != -1) {
-                available[m_color[*i]] = true;
-            }
-        }
-        int cr;
-        for (cr = 0; cr < m_numV; cr++) {
-            if (available[cr] == false) {
-                break;
-            }
-        }
-        m_color[u->first] = cr;
-        for (auto i = u->second.begin(); i != u->second.end(); i++) {
-            if (m_color[*i] != -1) {
-                available[m_color[*i]] = false;
-            }
-        }
-    }
-}
-
 PYBIND11_MODULE(ggdGVC, m)
 {
     m.doc() = "ggdGVC: A Simple Vertex Coloring Library";
