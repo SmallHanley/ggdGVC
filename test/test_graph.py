@@ -16,6 +16,9 @@ class Test_Graph():
         assert color == 4
         color = G.get_vertex_color(2)
         assert color == -1
+        G.clear_color()
+        color = G.get_vertex_color(1)
+        assert color == -1
 
     def test_load_color(self):
         G = graph()
@@ -44,6 +47,13 @@ class Test_Graph():
         color = G.load_color()
         assert len(color) == 4
         assert color[4] == 22
+
+    def test_read_graph(self):
+        G = graph()
+        G.read_graph('../graph/complete_graph.json')
+        G.color_graph()
+        num = G.get_color_num()
+        assert num == 10
 
 if __name__ == '__main__':
     G = graph(graph.BACKTRACKING)

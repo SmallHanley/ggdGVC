@@ -96,6 +96,16 @@ public:
         }
     }
 
+    int get_color_num()
+    {
+        return std::max_element(m_color.begin(), m_color.end(),
+                                [](const std::pair<int, int> &a,
+                                   const std::pair<int, int> &b) -> bool {
+                                    return a.second < b.second;
+                                })
+            ->second + 1;
+    }
+
     void clear_color()
     {
         for (auto &it : m_color) {
@@ -177,7 +187,7 @@ private:
                                     const std::pair<int, int> &b) -> bool {
                                      return a.second < b.second;
                                  })
-                    ->second;
+                    ->second + 1;
             if (numC < minC) {
                 m_color = color;
                 minC = numC;
