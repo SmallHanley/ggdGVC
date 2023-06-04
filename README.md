@@ -145,3 +145,14 @@ If you would like to refer to more examples, please refer to the `graph/` direct
 
 * Petersen graph
 [](image/petersen_graph.png)
+
+## Timing Result
+
+|                                      |  greedy  | backtracking | welsh_powell |
+|:------------------------------------:|:--------:|:------------:|:------------:|
+|              $K_{1000}$              | 0.039789 |   0.735179   |   1.227832   |
+|               # colors               |   1000   |     1000     |     1000     |
+| bipartite_graph V(500, 500), E(5000) | 0.000179 |   0.000104   |   0.000289   |
+|               # colors               |    8     |      2       |      11      |
+|  bipartite_graph V(5000), E(100000)  | 0.006608 |   0.006476   |   0.014120   |
+|               # colors               |    17    |      17      |      18      |
